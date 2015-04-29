@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="summernoteDemo">
+<head>
+  <title>Angular-summernote Demo</title>
+
+  <!--summernote dependencies-->
+  <script src="components/jquery/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+  <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
+
+  <!--summernote-->
+  <link rel="stylesheet" href="components/summernote/dist/summernote.css" />
+  <script src="components/summernote/dist/summernote.js"></script>
+  <script src="components/summernote/lang/summernote-de-DE.js"></script>
+
+  <!--angular-summernote dependencies -->
+  <script src="components/angular/angular.min.js"></script>
+  <script src="../src/angular-summernote.js"></script>
+
+  <style>
+    body {
+      margin: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>angular-summernote</h1>
+  <p>angular directive for <a href="http://hackerwins.github.io/summernote/">Summernote</a></p>
+
+  <h2>summernote directive</h2>
+
+  <h4>use element</h4>
+  <summernote></summernote>
+
+  <h4>use attribute</h4>
+  <div summernote></div>
+
+  <h2>summernote options</h2>
+
+  <h4>height</h4>
+  <summernote height="300"></summernote>
+
+  <h4>focus</h4>
+  <summernote focus></summernote>
+
+  <h4>lang</h4>
+  <summernote lang="de-DE"></summernote>
+
+  <div ng-controller="AirmodeCtrl">
+    <h4>airmode</h4>
+    <summernote airMode ng-model="text">
+    </summernote>
+  </div>
+
+  <div ng-controller="OptCtrl">
+    <h4>options object</h4>
+    <summernote config="options"></summernote>
+  </div>
+
+  <div ng-controller="CodeCtrl">
+    <h4>code : HTML string in summernote</h4>
+    <summernote ng-model="text"></summernote>
+
+    <br>
+    <textarea type="text" ng-model="text" style="width:100%;"></textarea></br>
+    text : {{text}}
+  </div>
+
+  <div ng-controller="CallbacksCtrl">
+    <h4>use callbacks</h4>
+    <summernote on-init="init()" on-enter="enter()" on-focus="focus(evt)"
+                on-blur="blur(evt)" on-paste="paste(evt)" on-keyup="keyup(evt)" on-keydown="keydown(evt)"
+                on-change="change(contents)"
+                on-image-upload="imageUpload(files, editor)"
+                editable="editable"></summernote>
+  </div>
+
+  <script>
+    angular.module('summernoteDemo', ['summernote'])
+        .controller('OptCtrl', function($scope) {
+          $scope.options = {
+            height: 150,
+            toolbar: [
+              ['style', ['bold', 'italic', 'underline', 'clear']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['height', ['height']]
+            ]
+          };
+        })
+        .controller('AirmodeCtrl', function($scope) {
+          $scope.text = "<h3>This is an Air-mode editable area.</h3>";
+        })
+        .controller('CodeCtrl', function($scope) {
+          $scope.text = "Hello World";
+        })
+        .controller('CallbacksCtrl', function($scope) {
+          $scope.init = function() { console.log('Summernote is launched'); };
+          $scope.enter = function() { console.log('Enter/Return key pressed'); };
+          $scope.focus = function(e) { console.log('Editable area is focused'); };
+          $scope.blur = function(e) { console.log('Editable area loses focus'); };
+          $scope.paste = function(e) {
+            console.log('Called event paste: ' +  e.originalEvent.clipboardData.getData('text'));
+          };
+          $scope.change = function(contents) {
+            console.log('contents are changed:', contents, $scope.editable);
+          };
+          $scope.keyup = function(e) { console.log('Key is released:', e.keyCode); };
+          $scope.keydown = function(e) { console.log('Key is pressed:', e.keyCode); };
+          $scope.imageUpload = function(files, editor) {
+            console.log('image upload:', files, editor);
+            console.log('image upload\'s editable:', $scope.editable);
+          };
+        });
+  </script>
+</body>
+</html>
