@@ -8,6 +8,10 @@
   "keywords": [
     "tmc"
   ],
+  "main": [
+    "./dist/summernote.js",
+    "./dist/summernote.css"
+  ],
   "license": "MIT",
   "dependencies": {
     "tmc-editor": "~1.0.0",
