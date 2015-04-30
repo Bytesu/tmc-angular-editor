@@ -14,6 +14,7 @@ angular.module('summernote', [])
 
     if (angular.isDefined($attrs.height)) { summernoteConfig.height = $attrs.height; }
     if (angular.isDefined($attrs.focus)) { summernoteConfig.focus = true; }
+    if (angular.isDefined($attrs.tmcApi)) { summernoteConfig.tmcApi = $attrs.tmcApi;}
     if (angular.isDefined($attrs.airmode)) { summernoteConfig.airMode = true; }
     if (angular.isDefined($attrs.lang)) {
       if (!angular.isDefined($.summernote.lang[$attrs.lang])) {
@@ -111,7 +112,7 @@ angular.module('summernote', [])
       require: ['summernote', '^?ngModel'],
       controller: 'SummernoteController',
       scope: {
-        summernoteConfig: '=config',
+        summernoteConfig: '=config',//tmcApi.rtk,tmcApi.upload
         editable: '=',
         init: '&onInit',
         enter: '&onEnter',
